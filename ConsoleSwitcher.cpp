@@ -1,6 +1,9 @@
 #include <unistd.h>
 #include "ConsoleSwitcher.h"
 
+/*Private*/
+struct termios ConsoleSwitcher::myTermStruct;
+
 char* ConsoleSwitcher::_key_code_sequences[_HOW_MANY_CODES_SEQ] = {
         (char*)"\163",//s
         (char*)"\123",//S
@@ -16,9 +19,6 @@ char* ConsoleSwitcher::_key_code_sequences[_HOW_MANY_CODES_SEQ] = {
         (char*)"\033\133\061\067\176"//KEY_F6
 };
 
-ConsoleSwitcher::ConsoleSwitcher() {}
-
-/*Private*/
 int ConsoleSwitcher::_my_ncmp(char* s1, char* s2, int how_many) {
     for(int i = 0; i < how_many; i++) {
         //printf("%dcmp %d %d\n", i, s1[i], s2[i]);
@@ -95,106 +95,6 @@ int ConsoleSwitcher::rk_readkey(enum keys *key) {
         }
         counter++;
     }
-    return 0;
-}
-
-int ConsoleSwitcher::rk_mytermsave(void)  {
-    /*Test aim, sizes of tcflag_t and int*/
-    //printf("Size tcflag_t:%lu\n", sizeof(tcflag_t));
-    //printf("Size int:%lu\n", sizeof(int));
-    //result: 4 bytes both sizes
-    
-    /*Open file to save state*/
-    int term_state_fd = open("05_term_state.bin", O_CREAT|O_WRONLY|O_TRUNC, S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
-    if(term_state_fd < 0) {
-        perror("Error occured with trying to open file to save terminal state\n");
-        exit(-1);
-    }
-    /*struct termios{
-        tcflag_t c_iflag;
-        tcflag_t c_oflag;
-        tcflag_t c_lflag;
-        tcflag_t c_cflag;
-        tcflag_t c_cc[NCCS];
-    }*/
-    struct termios myTermStruct;
-    /*Load old termios value*/
-    tcgetattr(0, &myTermStruct);
-    
-    /*Variables to save data*/
-    u_int32_t* data_to_save[4+NCCS];
-    u_int32_t  data_to_save_in_order[4+NCCS];
-    
-    /*Convert to network order, and binary save*/
-    data_to_save[0] = (u_int32_t*)&myTermStruct.c_iflag;
-    data_to_save[1] = (u_int32_t*)&myTermStruct.c_oflag;
-    data_to_save[2] = (u_int32_t*)&myTermStruct.c_lflag;
-    data_to_save[3] = (u_int32_t*)&myTermStruct.c_cflag;
-    
-    int i;
-    for(i = 0; i < NCCS; i++) {
-        data_to_save[4+i] = (u_int32_t*)&myTermStruct.c_cc[i];
-    }
-    
-    ssize_t res;
-    for(i = 0; i < 4+NCCS; i++) {
-        data_to_save_in_order[i] = htonl(*data_to_save[i]);
-        /*Write*/
-        res = write(term_state_fd, &data_to_save_in_order[i], sizeof(u_int32_t));
-        if(res < 0) {
-            perror("write to 05_term_state.bin file was failed");
-            exit(-1);
-        }
-    }
-    
-    close(term_state_fd);
-    return 0;
-}
-
-int ConsoleSwitcher::rk_mytermrestore(void)  {
-    /*Open file to restore state*/
-    int term_state_fd = open("05_term_state.bin", O_RDONLY);
-    if(term_state_fd < 0) {
-        perror("Error occured with trying to open file to restore terminal state\n");
-        exit(-1);
-    }
-    /*struct termios{
-        tcflag_t c_iflag;
-        tcflag_t c_oflag;
-        tcflag_t c_lflag;
-        tcflag_t c_cflag;
-        tcflag_t c_cc[NCCS];
-    }*/
-    struct termios myTermStruct;
-    
-    /*Variable to restore data*/
-    u_int32_t  data_to_restore_in_order[4+NCCS];
-    
-    /*Read from file*/
-    int i;
-    ssize_t res;
-    for(i = 0; i < 4+NCCS; i++) {
-        res = read(term_state_fd, &data_to_restore_in_order[i], sizeof(u_int32_t));
-        if(res < 0) {
-            perror("Error when reading from the terminal state file\n");
-            return -1;
-        }
-    }
-    
-    /*Convert to host order, and set to struct*/
-    myTermStruct.c_iflag = (tcflag_t)ntohl(data_to_restore_in_order[0]);
-    myTermStruct.c_oflag = (tcflag_t)ntohl(data_to_restore_in_order[1]);
-    myTermStruct.c_lflag = (tcflag_t)ntohl(data_to_restore_in_order[2]);
-    myTermStruct.c_cflag = (tcflag_t)ntohl(data_to_restore_in_order[3]);
-    
-    for(i = 0; i < NCCS; i++) {
-        myTermStruct.c_cc[i] = (tcflag_t)ntohl(data_to_restore_in_order[i+4]);
-    }
-    
-    /*Trying to set terminal state*/
-    tcsetattr(0, TCSADRAIN, &myTermStruct);
-    
-    close(term_state_fd);
     return 0;
 }
 
@@ -300,14 +200,19 @@ int ConsoleSwitcher::rk_mytermregime(int regime, int vtime, int vmin, int echo, 
 }
 
 /*Public*/
+ConsoleSwitcher::ConsoleSwitcher() {}
+
 int ConsoleSwitcher::storeCurrentTerminalState() {
+    tcgetattr(0, &ConsoleSwitcher::myTermStruct);
     return 0;
 }
 
 int ConsoleSwitcher::setNotCanonicalTerminalState() {
+    ConsoleSwitcher::rk_mytermregime(~ICANON, 0, 0, 0, ISIG);
     return 0;
 }
 
 int ConsoleSwitcher::restoreTerminalState() {
+    tcsetattr(0, TCSADRAIN, &ConsoleSwitcher::myTermStruct);
     return 0;
 }
