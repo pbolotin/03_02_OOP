@@ -14,7 +14,7 @@ int main() {
     ConsoleSwitcher::setNotCanonicalTerminalState();
     GameProcess gp;
     GameRepresentator gr;
-    while(i < 10) {
+    while(!gp.it_is_the_end()) {
         ret_val = ticker->do_tick();
         if(0 == ret_val) {
             cout << "tick ok" << endl;
@@ -22,6 +22,8 @@ int main() {
             cout << "tick wrong" << endl;
         }
         i++;
+        gp.setUserWillByKey(ConsoleSwitcher::getLastKeyFromTerminal());
+        gp.doGameProcessStep();
     }
     ConsoleSwitcher::restoreTerminalState();
     return 0;
