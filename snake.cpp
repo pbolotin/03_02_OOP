@@ -1,5 +1,6 @@
 #include <iostream>
-#include "GameField.h"
+#include "GameProcess.h"
+#include "GameRepresentator.h"
 #include "Ticker.h"
 #include "ConsoleSwitcher.h"
 
@@ -11,6 +12,8 @@ int main() {
     int i = 0;
     ConsoleSwitcher::storeCurrentTerminalState();
     ConsoleSwitcher::setNotCanonicalTerminalState();
+    GameProcess gp;
+    GameRepresentator gr;
     while(i < 10) {
         ret_val = ticker->do_tick();
         if(0 == ret_val) {
