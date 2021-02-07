@@ -55,6 +55,7 @@ public:
     static int storeCurrentTerminalState();
     static int setNotCanonicalTerminalState();
     static int restoreTerminalState();
+    static enum keys getLastKeyFromTerminal();
 };
 
 #endif

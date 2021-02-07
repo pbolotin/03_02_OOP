@@ -1,5 +1,9 @@
 #include <unistd.h>
+#include <iostream>
 #include "ConsoleSwitcher.h"
+#include "User.h"
+
+using namespace std;
 
 /*Private*/
 struct termios ConsoleSwitcher::myTermStruct;
@@ -215,4 +219,16 @@ int ConsoleSwitcher::setNotCanonicalTerminalState() {
 int ConsoleSwitcher::restoreTerminalState() {
     tcsetattr(0, TCSADRAIN, &ConsoleSwitcher::myTermStruct);
     return 0;
+}
+
+enum keys ConsoleSwitcher::getLastKeyFromTerminal() {
+    enum keys key = UNKNOWN_KEY;
+    enum keys lastKey = UNKNOWN_KEY;
+    int ret_val;
+    do {
+        lastKey = key;
+        ret_val = ConsoleSwitcher::rk_readkey(&key);
+    } while(ret_val);
+    //cout << "ConsoleSwitcher::getKeyFromTerminal" << ret_val << lastKey << endl;
+    return lastKey;
 }
