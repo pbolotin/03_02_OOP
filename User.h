@@ -14,6 +14,8 @@ private:
     int the_last_will;
 public:
     User();
+    void setLastWill(int last_will);
+    int getLastWill();
 };
 
 #endif
