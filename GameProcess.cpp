@@ -56,5 +56,8 @@ int GameProcess::doGameProcessStep() {
     if(this->user.getLastWill() == USER_WANT_GAME_QUIT) {
         this->the_end_flag = 1;
     }
+    if(this->user.getLastWill() == USER_WANT_SNAKE_UP) {
+        this->wall.placeOnGameField(this->gf);
+    }
     return 0;
 }
