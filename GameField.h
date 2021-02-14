@@ -10,6 +10,7 @@ class GameField {
 public:
     GameField();
     GameField(unsigned sizeX, unsigned sizeY);
+    int getSizeXY(unsigned sizeXY[]);
     ~GameField();
 };
 

@@ -26,6 +26,12 @@ GameField::GameField(unsigned sizeX, unsigned sizeY) {
     cout << "Coustructor GameField::GameField(sizeX, sizeY)" << endl;
 }
 
+int GameField::getSizeXY(unsigned sizeXY[]) {
+    sizeXY[0] = this->sizeX;
+    sizeXY[1] = this->sizeY;
+    return 0;
+}
+
 GameField::~GameField() {
     for(unsigned i = 0; i < this->sizeX; i++) {
         delete [] matrix[i];
