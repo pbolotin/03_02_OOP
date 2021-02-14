@@ -7,7 +7,7 @@
 using namespace std;
 
 int main() {
-    Ticker* ticker = new Ticker(1000000);
+    Ticker* ticker = new Ticker(100000);
     int ret_val;
     int i = 0;
     ConsoleSwitcher::storeCurrentTerminalState();
