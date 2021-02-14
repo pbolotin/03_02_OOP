@@ -16,6 +16,7 @@ public:
     int it_is_the_end();
     int setUserWillByKey(enum keys key);
     int doGameProcessStep();
+    GameField& getGameField();
 };
 
 #endif

@@ -57,7 +57,11 @@ int GameProcess::doGameProcessStep() {
         this->the_end_flag = 1;
     }
     if(this->user.getLastWill() == USER_WANT_SNAKE_UP) {
-        this->wall.placeOnGameField(this->gf);
+        this->wall.toPlaceOnGameField(this->gf);
     }
     return 0;
+}
+
+GameField& GameProcess::getGameField() {
+    return this->gf;
 }
