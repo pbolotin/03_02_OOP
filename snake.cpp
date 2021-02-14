@@ -24,6 +24,7 @@ int main() {
         i++;
         gp.setUserWillByKey(ConsoleSwitcher::getLastKeyFromTerminal());
         gp.doGameProcessStep();
+        gr.outputGameFieldOnTerminal(gp.getGameField());
     }
     ConsoleSwitcher::restoreTerminalState();
     return 0;
