@@ -32,6 +32,19 @@ int GameField::getSizeXY(unsigned sizeXY[]) {
     return 0;
 }
 
+int GameField::getValueByCoordsXY(unsigned *value, unsigned coordsXY[]) {
+    *value = matrix[coordsXY[0]][coordsXY[1]];
+    return 0;
+}
+
+int GameField::toPlaceValueByCoordsXY(unsigned value, unsigned coordsXY[]) {
+    if(coordsXY[0] < this->sizeX && coordsXY[1] < this->sizeY) {
+        this->matrix[coordsXY[0]][coordsXY[1]] = value;
+        return 0;
+    }
+    return -1;
+}
+
 GameField::~GameField() {
     for(unsigned i = 0; i < this->sizeX; i++) {
         delete [] matrix[i];
