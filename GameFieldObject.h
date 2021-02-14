@@ -7,7 +7,7 @@
 
 class GameFieldObject {
 public:
-    virtual int placeOnGameField(GameField&) = 0;
+    virtual int toPlaceOnGameField(GameField&) = 0;
     virtual ~GameFieldObject() = default;
 };
 
