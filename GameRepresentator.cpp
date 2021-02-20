@@ -2,6 +2,7 @@
 #include <iostream>
 #include "GameRepresentator.h"
 #include "WallGFO.h"
+#include "SnakeGFO.h"
 
 using namespace std;
 
@@ -24,6 +25,9 @@ int GameRepresentator::outputGameFieldOnTerminal(GameField& gf) {
             switch(value) {
                 case WALL_MATRIX_VALUE:
                     longStr[placeInStr] = '*';
+                    break;
+                case SNAKE_GF_CODE:
+                    longStr[placeInStr] = 'S';
                     break;
                 default:
                     longStr[placeInStr] = ' ';

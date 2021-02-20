@@ -58,6 +58,7 @@ int GameProcess::doGameProcessStep() {
     }
     if(this->user.getLastWill() == USER_WANT_SNAKE_UP) {
         this->wall.setOnGameField(this->gf);
+        this->snake.setOnGameField(this->gf);
     }
     return 0;
 }
