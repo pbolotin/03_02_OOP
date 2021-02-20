@@ -12,7 +12,7 @@ public:
     GameField(unsigned sizeX, unsigned sizeY);
     int getSizeXY(unsigned sizeXY[]);
     int getValueByCoordsXY(unsigned *, unsigned[]);
-    int toPlaceValueByCoordsXY(unsigned, unsigned[]);
+    int setValueByCoordsXY(unsigned, unsigned[]);
     ~GameField();
 };
 

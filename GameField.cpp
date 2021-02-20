@@ -37,7 +37,7 @@ int GameField::getValueByCoordsXY(unsigned *value, unsigned coordsXY[]) {
     return 0;
 }
 
-int GameField::toPlaceValueByCoordsXY(unsigned value, unsigned coordsXY[]) {
+int GameField::setValueByCoordsXY(unsigned value, unsigned coordsXY[]) {
     if(coordsXY[0] < this->sizeX && coordsXY[1] < this->sizeY) {
         this->matrix[coordsXY[0]][coordsXY[1]] = value;
         return 0;

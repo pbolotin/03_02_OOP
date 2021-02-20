@@ -9,11 +9,11 @@
 
 class WallGFO : GameFieldObject {
 private:
-    unsigned wayToPlace;
+    unsigned wayOfSetting;
     unsigned char wallUCharSymbol;
 public:
     WallGFO();
-    int toPlaceOnGameField(GameField& gf);
+    int setOnGameField(GameField& gf);
     ~WallGFO() = default;
 };
 
