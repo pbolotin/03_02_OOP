@@ -10,6 +10,7 @@ public:
     Ticker(unsigned long tick_length);
     Ticker(unsigned long tick_length, unsigned long tick_counter);
     int do_tick();
+    unsigned long getTickCount();
 };
 
 #endif

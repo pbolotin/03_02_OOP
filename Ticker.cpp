@@ -20,3 +20,7 @@ int Ticker::do_tick() {
     this->tick_counter++;
     return 0;
 }
+
+unsigned long Ticker::getTickCount() {
+    return this->tick_counter;
+}
