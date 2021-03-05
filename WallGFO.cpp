@@ -3,7 +3,7 @@
 
 using namespace std;
 
-WallGFO::WallGFO(): wayOfSetting(WALL_AROUND_GAME_FIELD), wallUCharSymbol(WALL_MATRIX_VALUE) {}
+WallGFO::WallGFO(): wayOfSetting(WALL_AROUND_GAME_FIELD), wallUCharSymbol(WALL_GF_CODE) {}
 
 int WallGFO::setOnGameField(GameField& gf) {
     unsigned sizeXY[2];
