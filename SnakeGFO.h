@@ -40,6 +40,7 @@ public:
     
     int setHeadCoordsXY(unsigned headCoordsXY[2]);
     int setOnGameField(GameField& gf);
+    int removeFromGameField(GameField& gf);
     
     int move();
     int check_if_finish();

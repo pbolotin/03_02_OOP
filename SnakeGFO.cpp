@@ -19,14 +19,23 @@ int SnakeGFO::setHeadCoordsXY(unsigned headCoordsXY[2]) {
 }
 
 int SnakeGFO::setOnGameField(GameField& gf) {
-    //gf.setValueByCoordsXY((unsigned)this->snakeGFCode, this->headCoordsXY);
-    
     for(list<Coords>::iterator it = this->head_and_tail.begin();
         it != this->head_and_tail.end();
         it++) {
         unsigned coordsXY[2];
         it->getValueXY(coordsXY[0], coordsXY[1]);
         gf.setValueByCoordsXY((unsigned)this->snakeGFCode, coordsXY);
+    }
+    return 0;
+}
+
+int SnakeGFO::removeFromGameField(GameField& gf) {
+    for(list<Coords>::iterator it = this->head_and_tail.begin();
+        it != this->head_and_tail.end();
+        it++) {
+        unsigned coordsXY[2];
+        it->getValueXY(coordsXY[0], coordsXY[1]);
+        gf.setValueByCoordsXY(EMPTY_GF_CODE, coordsXY);
     }
     return 0;
 }

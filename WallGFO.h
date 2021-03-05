@@ -14,6 +14,7 @@ private:
 public:
     WallGFO();
     int setOnGameField(GameField& gf);
+    int removeFromGameField(GameField& gf);
     ~WallGFO() = default;
 };
 
