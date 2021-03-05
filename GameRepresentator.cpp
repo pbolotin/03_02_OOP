@@ -23,14 +23,17 @@ int GameRepresentator::outputGameFieldOnTerminal(GameField& gf) {
             coordsXY[1] = j;
             gf.getValueByCoordsXY(&value, coordsXY);
             switch(value) {
-                case WALL_MATRIX_VALUE:
+                case WALL_GF_CODE:
                     longStr[placeInStr] = '*';
                     break;
                 case SNAKE_GF_CODE:
                     longStr[placeInStr] = 'S';
                     break;
-                default:
+                case EMPTY_GF_CODE:
                     longStr[placeInStr] = ' ';
+                    break;
+                default:
+                    longStr[placeInStr] = 'E';
             }
             placeInStr++;
         }
