@@ -72,6 +72,15 @@ int GameProcess::doGameProcessStep() {
         this->the_end_flag = 1;
     }
     this->wall.setOnGameField(this->gf);
+    if(!this->food.check_if_placed()) {
+        Coords snakeHead;
+        snake.getHeadCoordsXY(snakeHead);
+        this->food.findCoordsForFood(this->gf, snakeHead);
+        if(this->food.check_if_found()) {
+            this->food.prepareFoundToSet();
+            this->food.setOnGameField(this->gf);
+        }
+    }
     this->snake.removeFromGameField(this->gf);
     this->snake.reactOnUser(this->user);
     this->snake.reactOnGameField(this->gf);    
