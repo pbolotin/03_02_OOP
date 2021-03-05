@@ -39,6 +39,8 @@ public:
     int reactOnTicker(Ticker& tr);
     
     int setHeadCoordsXY(unsigned headCoordsXY[2]);
+    int getHeadCoordsXY(Coords& headCoords);
+    
     int setOnGameField(GameField& gf);
     int removeFromGameField(GameField& gf);
     

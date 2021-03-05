@@ -18,6 +18,11 @@ int SnakeGFO::setHeadCoordsXY(unsigned headCoordsXY[2]) {
     return 0;
 }
 
+int SnakeGFO::getHeadCoordsXY(Coords& headCoords) {
+    headCoords.setValueXY(this->headCoordsXY[0], this->headCoordsXY[1]);
+    return 0;
+}
+
 int SnakeGFO::setOnGameField(GameField& gf) {
     for(list<Coords>::iterator it = this->head_and_tail.begin();
         it != this->head_and_tail.end();
