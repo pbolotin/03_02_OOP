@@ -1,24 +1,18 @@
 #include <iostream>
 #include <cstdlib>
+#include <ctime>
 #include <vector>
 #include "FoodGFO.h"
 
 using namespace std;
 
-FoodGFO::FoodGFO(): XY(0,0), foundXY(0,0), eaten(0), placed(0) {}
+FoodGFO::FoodGFO(): XY(0,0), foundXY(0,0), eaten(FOOD_NOT_EATEN), placed(FOOD_NOT_PLACED), found(FOOD_PLACE_NOT_FOUND) {}
 
 int FoodGFO::setOnGameField(GameField& gf) {
-    unsigned sizeXY[2];
-    gf.getSizeXY(sizeXY);
-
-    unsigned coordsXY[2];
-    for(unsigned i = 0; i < sizeXY[0]; i++) {
-        coordsXY[0] = i;
-        coordsXY[1] = 0;
-        gf.setValueByCoordsXY(FOOD_GF_CODE, coordsXY);
-        coordsXY[1] = sizeXY[1]-1;
-        gf.setValueByCoordsXY(FOOD_GF_CODE, coordsXY);
-    }
+    unsigned XY[2];
+    this->XY.getValueXY(XY[0],XY[1]);
+    gf.setValueByCoordsXY(FOOD_GF_CODE, XY);
+    this->placed = FOOD_PLACED;
     return 0;
 }
 
@@ -58,13 +52,38 @@ int FoodGFO::findCoordsForFood(GameField& gf, Coords& snakeHead) {
             }
         }
     }
-    cout << good_places_for_food.size() << endl;
-    Coords* good_place_ptr;
+    
+    unsigned sz = good_places_for_food.size();
+    if(sz != 0) {
+        srand(time(nullptr));
+        unsigned pos = rand() % sz;
+        good_places_for_food[pos]->getValueXY(coordsXY[0], coordsXY[1]);
+        this->foundXY.setValueXY(coordsXY[0], coordsXY[1]);
+        this->found = FOOD_PLACE_FOUND;
+    } else {
+        this->found = FOOD_PLACE_NOT_FOUND;
+    }
     
     while(!good_places_for_food.empty()) {
-        good_place_ptr = good_places_for_food.back();
+        delete good_places_for_food.back();
         good_places_for_food.pop_back();
-        delete good_place_ptr;
     }
     return 0;
+}
+
+int FoodGFO::prepareFoundToSet() {
+    this->XY = this->foundXY;
+    return 0;
+}
+
+int FoodGFO::check_if_placed() {
+    if(FOOD_PLACED == this->placed) {
+        return 1;
+    } else return 0;
+}
+
+int FoodGFO::check_if_found() {
+    if(FOOD_PLACE_FOUND == this->found) {
+        return 1;
+    } else return 0;
 }
