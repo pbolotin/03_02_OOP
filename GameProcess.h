@@ -5,6 +5,7 @@
 #include "GameField.h"
 #include "WallGFO.h"
 #include "SnakeGFO.h"
+#include "FoodGFO.h"
 #include "User.h"
 #include "ConsoleSwitcher.h"
 
@@ -16,6 +17,7 @@ class GameProcess {
     User user;
     WallGFO wall;
     SnakeGFO snake;
+    FoodGFO food;
     int the_end_flag;
 public:
     GameProcess();
