@@ -72,6 +72,7 @@ int GameProcess::doGameProcessStep() {
         this->the_end_flag = 1;
     }
     this->wall.setOnGameField(this->gf);
+    this->snake.removeFromGameField(this->gf);
     this->snake.reactOnUser(this->user);
     this->snake.reactOnGameField(this->gf);    
     this->snake.reactOnTicker(this->ticker);
