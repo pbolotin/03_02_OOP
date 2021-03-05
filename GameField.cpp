@@ -8,7 +8,7 @@ int GameField::initializeMatrix() {
     for(unsigned i = 0; i < this->sizeX; i++) {
         matrix[i] = new unsigned[this->sizeY];
         for(unsigned j = 0; j < this->sizeY; j++) {
-            matrix[i][j] = 0;
+            matrix[i][j] = EMPTY_GF_CODE;
         }
     }
     return 0;
