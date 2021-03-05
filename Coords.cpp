@@ -1,8 +1,12 @@
+#include <iostream>
 #include "Coords.h"
+
+using namespace std;
 
 Coords::Coords(): x(0), y(0) {}
 
 Coords::Coords(unsigned x, unsigned y) {
+    cout << "Constr: " << x << " " << y << endl;
     this->x = x;
     this->y = y;
 }
@@ -19,4 +23,6 @@ int Coords::setValueXY(unsigned x, unsigned y) {
     return 0;
 }
 
-Coords::~Coords() {}
+Coords::~Coords() {
+    cout << "Destr" << endl;
+}
