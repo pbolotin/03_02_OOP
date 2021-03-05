@@ -14,11 +14,20 @@ SnakeGFO::SnakeGFO(): snakeGFCode(SNAKE_GF_CODE),
 int SnakeGFO::setHeadCoordsXY(unsigned headCoordsXY[2]) {
     this->headCoordsXY[0] = headCoordsXY[0];
     this->headCoordsXY[1] = headCoordsXY[1];
+    this->head_and_tail.push_front(*(new Coords(headCoordsXY[0], headCoordsXY[1])));
     return 0;
 }
 
 int SnakeGFO::setOnGameField(GameField& gf) {
-    gf.setValueByCoordsXY((unsigned)this->snakeGFCode, this->headCoordsXY);
+    //gf.setValueByCoordsXY((unsigned)this->snakeGFCode, this->headCoordsXY);
+    
+    for(list<Coords>::iterator it = this->head_and_tail.begin();
+        it != this->head_and_tail.end();
+        it++) {
+        unsigned coordsXY[2];
+        it->getValueXY(coordsXY[0], coordsXY[1]);
+        gf.setValueByCoordsXY((unsigned)this->snakeGFCode, coordsXY);
+    }
     return 0;
 }
 
@@ -116,6 +125,12 @@ int SnakeGFO::move() {
             this->headCoordsXY[0] -= 1;
             break;
     }
+    
+    Coords& new_head = this->head_and_tail.back();
+    this->head_and_tail.pop_back();
+    new_head.setValueXY(this->headCoordsXY[0], this->headCoordsXY[1]);
+    this->head_and_tail.push_front(new_head);
+    
     return 0;
 }
 

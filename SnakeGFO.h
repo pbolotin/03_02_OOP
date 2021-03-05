@@ -1,6 +1,8 @@
 #ifndef _SnakeGFO_h_
 #define _SnakeGFO_h_
 
+#include <list>
+#include "Coords.h"
 #include "GameFieldObject.h"
 #include "ActiveObject.h"
 #include "GameField.h"
@@ -29,6 +31,7 @@ private:
     unsigned finishFlag;
     
     unsigned headCoordsXY[2];
+    std::list<Coords> head_and_tail;
 public:
     SnakeGFO();
     int reactOnUser(User& ur);
