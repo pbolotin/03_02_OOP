@@ -1,8 +1,18 @@
 #include "GameProcess.h"
 #include <stdio.h>
 
-GameProcess::GameProcess(): the_end_flag(0) {
+GameProcess::GameProcess(): ticker(GP_TICKER_DEFAULT), the_end_flag(0)
+{
     printf("GameProcess constructor, initialize game\n");
+    
+    unsigned sizeXY[2];
+    this->gf.getSizeXY(sizeXY);
+    
+    unsigned coordsXY[2];
+    coordsXY[0] = sizeXY[0]/2;
+    coordsXY[1] = sizeXY[1]/2;
+    
+    this->snake.setHeadCoordsXY(coordsXY);
 }
 
 GameProcess::~GameProcess() {
@@ -53,14 +63,25 @@ int GameProcess::setUserWillByKey(enum keys key) {
 }
 
 int GameProcess::doGameProcessStep() {
-    if(this->user.getLastWill() == USER_WANT_GAME_QUIT) {
+    int user_will = this->user.getLastWill();
+    if(user_will == USER_WANT_GAME_QUIT) {
         this->the_end_flag = 1;
     }
-    if(this->user.getLastWill() == USER_WANT_SNAKE_UP) {
-        this->wall.setOnGameField(this->gf);
-        this->snake.setOnGameField(this->gf);
+    if(this->snake.check_if_finish()) {
+        printf("SNAKE IS FINISHED!\n");
+        this->the_end_flag = 1;
     }
+    this->wall.setOnGameField(this->gf);
+    this->snake.reactOnUser(this->user);
+    this->snake.reactOnGameField(this->gf);    
+    this->snake.reactOnTicker(this->ticker);
+    
+    this->snake.setOnGameField(this->gf);
     return 0;
+}
+
+int GameProcess::doGamePause() {
+    return this->ticker.do_tick();
 }
 
 GameField& GameProcess::getGameField() {
