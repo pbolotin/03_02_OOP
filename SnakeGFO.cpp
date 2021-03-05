@@ -1,6 +1,7 @@
 #include <iostream>
 #include "WallGFO.h"
 #include "SnakeGFO.h"
+#include "FoodGFO.h"
 
 using namespace std;
 
@@ -98,11 +99,14 @@ int SnakeGFO::reactOnGameField(GameField& gf) {
         case EMPTY_GF_CODE:
             this->canMove = SNAKE_CAN_MOVE;
             break;
+        case WALL_GF_CODE:
+            this->canMove = SNAKE_CANT_MOVE;
+            break;
         case SNAKE_GF_CODE:
             this->canMove = SNAKE_CANT_MOVE;
             break;
-        case WALL_GF_CODE:
-            this->canMove = SNAKE_CANT_MOVE;
+        case FOOD_GF_CODE:
+            this->canMove = SNAKE_CAN_MOVE;
             break;
         default:
             this->canMove = SNAKE_CANT_MOVE;

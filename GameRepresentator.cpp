@@ -3,6 +3,7 @@
 #include "GameRepresentator.h"
 #include "WallGFO.h"
 #include "SnakeGFO.h"
+#include "FoodGFO.h"
 
 using namespace std;
 
@@ -23,14 +24,17 @@ int GameRepresentator::outputGameFieldOnTerminal(GameField& gf) {
             coordsXY[1] = j;
             gf.getValueByCoordsXY(&value, coordsXY);
             switch(value) {
+                case EMPTY_GF_CODE:
+                    longStr[placeInStr] = ' ';
+                    break;
                 case WALL_GF_CODE:
-                    longStr[placeInStr] = '*';
+                    longStr[placeInStr] = 'W';
                     break;
                 case SNAKE_GF_CODE:
                     longStr[placeInStr] = 'S';
                     break;
-                case EMPTY_GF_CODE:
-                    longStr[placeInStr] = ' ';
+                case FOOD_GF_CODE:
+                    longStr[placeInStr] = 'F';
                     break;
                 default:
                     longStr[placeInStr] = 'E';
