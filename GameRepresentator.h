@@ -7,6 +7,7 @@ class GameRepresentator {
 public:
     GameRepresentator();
     int outputGameFieldOnTerminal(GameField& gf);
+    int outputGameResultOnTerminal(GameField& gf, int result);
     ~GameRepresentator();
 };
 
