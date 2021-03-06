@@ -13,6 +13,9 @@ GameProcess::GameProcess(): ticker(GP_TICKER_DEFAULT), the_end_flag(0)
     coordsXY[1] = sizeXY[1]/2;
     
     this->snake.setHeadCoordsXY(coordsXY);
+    this->allGFO.push_back(&(this->snake));
+    this->allGFO.push_back(&(this->wall));
+    this->allGFO.push_back(&(this->food));
 }
 
 GameProcess::~GameProcess() {
@@ -97,6 +100,17 @@ int GameProcess::doGamePause() {
     return this->ticker.do_tick();
 }
 
+int GameProcess::doFinish() {
+    for(unsigned long i = 0; i < this->allGFO.size(); i++) {
+        this->allGFO[i]->removeFromGameField(this->gf);
+    }
+    return 0;
+}
+
 GameField& GameProcess::getGameField() {
     return this->gf;
+}
+
+int GameProcess::getGameResult() {
+    return this->snake.getLength() - 1;
 }

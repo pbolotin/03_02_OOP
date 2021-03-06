@@ -1,7 +1,9 @@
 #ifndef _GameProcess_
 #define _GameProcess_
 
+#include <vector>
 #include "Ticker.h"
+#include "GameFieldObject.h"
 #include "GameField.h"
 #include "WallGFO.h"
 #include "SnakeGFO.h"
@@ -11,10 +13,13 @@
 
 #define GP_TICKER_DEFAULT 100000
 
+using namespace std;
+
 class GameProcess {
     Ticker ticker;
     GameField gf;
     User user;
+    vector<GameFieldObject*> allGFO;
     WallGFO wall;
     SnakeGFO snake;
     FoodGFO food;
@@ -23,9 +28,11 @@ public:
     GameProcess();
     ~GameProcess();
     int it_is_the_end();
+    int getGameResult();
     int setUserWillByKey(enum keys key);
     int doGameProcessStep();
     int doGamePause();
+    int doFinish();
     GameField& getGameField();
 };
 
