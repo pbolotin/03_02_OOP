@@ -132,6 +132,10 @@ int SnakeGFO::reactOnTicker(Ticker& tr) {
     return 0;
 }
 
+int SnakeGFO::getLength() {
+    return this->head_and_tail.size();
+}
+
 int SnakeGFO::move() {
     switch(this->moveDirection) {
         case SNAKE_MOVE_UP:

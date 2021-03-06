@@ -25,7 +25,7 @@
 #define SNAKE_CAN_EAT       1
 #define SNAKE_CANT_EAT      0
 
-class SnakeGFO : GameFieldObject, ActiveObject {
+class SnakeGFO : public GameFieldObject, ActiveObject {
 private:
     unsigned char snakeGFCode;
     unsigned moveDirection;
@@ -47,6 +47,8 @@ public:
     
     int setOnGameField(GameField& gf);
     int removeFromGameField(GameField& gf);
+    
+    int getLength();
     
     int move();
     int check_if_finish();
