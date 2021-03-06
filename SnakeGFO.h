@@ -22,11 +22,15 @@
 #define SNAKE_FINISH        1
 #define SNAKE_NOT_FINISH    0
 
+#define SNAKE_CAN_EAT       1
+#define SNAKE_CANT_EAT      0
+
 class SnakeGFO : GameFieldObject, ActiveObject {
 private:
     unsigned char snakeGFCode;
     unsigned moveDirection;
     unsigned canMove;
+    unsigned canEat;
     unsigned tickReductorQuotient;
     unsigned finishFlag;
     

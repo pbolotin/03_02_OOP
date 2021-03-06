@@ -8,6 +8,7 @@ using namespace std;
 SnakeGFO::SnakeGFO(): snakeGFCode(SNAKE_GF_CODE),
                       moveDirection(SNAKE_MOVE_UP),
                       canMove(SNAKE_CAN_MOVE),
+                      canEat(SNAKE_CANT_EAT),
                       tickReductorQuotient(SNAKE_TICK_REDUCTOR),
                       finishFlag(SNAKE_NOT_FINISH)
 {}
@@ -107,6 +108,7 @@ int SnakeGFO::reactOnGameField(GameField& gf) {
             break;
         case FOOD_GF_CODE:
             this->canMove = SNAKE_CAN_MOVE;
+            this->canEat = SNAKE_CAN_EAT;
             break;
         default:
             this->canMove = SNAKE_CANT_MOVE;
@@ -144,10 +146,16 @@ int SnakeGFO::move() {
             break;
     }
     
-    Coords& new_head = this->head_and_tail.back();
-    this->head_and_tail.pop_back();
-    new_head.setValueXY(this->headCoordsXY[0], this->headCoordsXY[1]);
-    this->head_and_tail.push_front(new_head);
+    if(SNAKE_CANT_EAT == this->canEat) {
+        Coords& new_head = this->head_and_tail.back();
+        this->head_and_tail.pop_back();
+        new_head.setValueXY(this->headCoordsXY[0], this->headCoordsXY[1]);
+        this->head_and_tail.push_front(new_head);
+    } else if(SNAKE_CAN_EAT == this->canEat) {
+        Coords& new_head = *(new Coords(this->headCoordsXY[0], this->headCoordsXY[1]));
+        this->head_and_tail.push_front(new_head);
+        this->canEat = SNAKE_CANT_EAT;
+    }
     
     return 0;
 }
