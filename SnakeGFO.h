@@ -35,7 +35,7 @@ private:
     unsigned finishFlag;
     
     unsigned headCoordsXY[2];
-    std::list<Coords> head_and_tail;
+    std::list<Coords*> head_and_tail;
 public:
     SnakeGFO();
     int reactOnUser(User& ur);
@@ -50,7 +50,7 @@ public:
     
     int move();
     int check_if_finish();
-    ~SnakeGFO() = default;
+    ~SnakeGFO();
 };
 
 #endif

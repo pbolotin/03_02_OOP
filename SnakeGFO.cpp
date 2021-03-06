@@ -16,7 +16,7 @@ SnakeGFO::SnakeGFO(): snakeGFCode(SNAKE_GF_CODE),
 int SnakeGFO::setHeadCoordsXY(unsigned headCoordsXY[2]) {
     this->headCoordsXY[0] = headCoordsXY[0];
     this->headCoordsXY[1] = headCoordsXY[1];
-    this->head_and_tail.push_front(*(new Coords(headCoordsXY[0], headCoordsXY[1])));
+    this->head_and_tail.push_front(new Coords(headCoordsXY[0], headCoordsXY[1]));
     return 0;
 }
 
@@ -26,22 +26,24 @@ int SnakeGFO::getHeadCoordsXY(Coords& headCoords) {
 }
 
 int SnakeGFO::setOnGameField(GameField& gf) {
-    for(list<Coords>::iterator it = this->head_and_tail.begin();
+    for(list<Coords*>::iterator it = this->head_and_tail.begin();
         it != this->head_and_tail.end();
-        it++) {
+        it++)
+    {
         unsigned coordsXY[2];
-        it->getValueXY(coordsXY[0], coordsXY[1]);
+        (*it)->getValueXY(coordsXY[0], coordsXY[1]);
         gf.setValueByCoordsXY((unsigned)this->snakeGFCode, coordsXY);
     }
     return 0;
 }
 
 int SnakeGFO::removeFromGameField(GameField& gf) {
-    for(list<Coords>::iterator it = this->head_and_tail.begin();
+    for(list<Coords*>::iterator it = this->head_and_tail.begin();
         it != this->head_and_tail.end();
-        it++) {
+        it++)
+    {
         unsigned coordsXY[2];
-        it->getValueXY(coordsXY[0], coordsXY[1]);
+        (*it)->getValueXY(coordsXY[0], coordsXY[1]);
         gf.setValueByCoordsXY(EMPTY_GF_CODE, coordsXY);
     }
     return 0;
@@ -147,12 +149,12 @@ int SnakeGFO::move() {
     }
     
     if(SNAKE_CANT_EAT == this->canEat) {
-        Coords& new_head = this->head_and_tail.back();
+        Coords* new_head = this->head_and_tail.back();
         this->head_and_tail.pop_back();
-        new_head.setValueXY(this->headCoordsXY[0], this->headCoordsXY[1]);
+        new_head->setValueXY(this->headCoordsXY[0], this->headCoordsXY[1]);
         this->head_and_tail.push_front(new_head);
     } else if(SNAKE_CAN_EAT == this->canEat) {
-        Coords& new_head = *(new Coords(this->headCoordsXY[0], this->headCoordsXY[1]));
+        Coords* new_head = new Coords(this->headCoordsXY[0], this->headCoordsXY[1]);
         this->head_and_tail.push_front(new_head);
         this->canEat = SNAKE_CANT_EAT;
     }
@@ -164,4 +166,11 @@ int SnakeGFO::check_if_finish() {
     if(SNAKE_FINISH == this->finishFlag) {
         return 1;
     } else return 0;
+}
+
+SnakeGFO::~SnakeGFO() {
+    while(!this->head_and_tail.empty()) {
+        delete this->head_and_tail.back();
+        this->head_and_tail.pop_back();
+    }
 }
