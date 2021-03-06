@@ -10,9 +10,6 @@
 #define FOOD_PLACED 1
 #define FOOD_NOT_PLACED 0
 
-#define FOOD_EATEN 1
-#define FOOD_NOT_EATEN 0
-
 #define FOOD_PLACE_FOUND 1
 #define FOOD_PLACE_NOT_FOUND 0
 
@@ -20,13 +17,13 @@ class FoodGFO : GameFieldObject {
 private:
     Coords XY;
     Coords foundXY;
-    unsigned eaten;
     unsigned placed;
     unsigned found;
 public:
     FoodGFO();
     int check_if_placed();
     int check_if_found();
+    int is_on_gf_yet(GameField& gf);
     int findCoordsForFood(GameField& gf, Coords& snakeHead);
     int prepareFoundToSet();
     int setOnGameField(GameField& gf);

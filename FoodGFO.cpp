@@ -6,7 +6,7 @@
 
 using namespace std;
 
-FoodGFO::FoodGFO(): XY(0,0), foundXY(0,0), eaten(FOOD_NOT_EATEN), placed(FOOD_NOT_PLACED), found(FOOD_PLACE_NOT_FOUND) {}
+FoodGFO::FoodGFO(): XY(0,0), foundXY(0,0), placed(FOOD_NOT_PLACED), found(FOOD_PLACE_NOT_FOUND) {}
 
 int FoodGFO::setOnGameField(GameField& gf) {
     unsigned XY[2];
@@ -17,17 +17,13 @@ int FoodGFO::setOnGameField(GameField& gf) {
 }
 
 int FoodGFO::removeFromGameField(GameField& gf) {
-    unsigned sizeXY[2];
-    gf.getSizeXY(sizeXY);
-    
-    unsigned coordsXY[2];
-    for(unsigned i = 0; i < sizeXY[0]; i++) {
-        coordsXY[0] = i;
-        coordsXY[1] = 0;
-        gf.setValueByCoordsXY(EMPTY_GF_CODE, coordsXY);
-        coordsXY[1] = sizeXY[1]-1;
-        gf.setValueByCoordsXY(EMPTY_GF_CODE, coordsXY);
+    if(this->is_on_gf_yet(gf)) {
+        unsigned XY[2];
+        this->XY.getValueXY(XY[0],XY[1]);
+        gf.setValueByCoordsXY(EMPTY_GF_CODE, XY);
+        this->placed = FOOD_NOT_PLACED;
     }
+    this->placed = FOOD_NOT_PLACED;
     return 0;
 }
 
@@ -73,6 +69,7 @@ int FoodGFO::findCoordsForFood(GameField& gf, Coords& snakeHead) {
 
 int FoodGFO::prepareFoundToSet() {
     this->XY = this->foundXY;
+    this->found = FOOD_PLACE_NOT_FOUND;
     return 0;
 }
 
@@ -86,4 +83,15 @@ int FoodGFO::check_if_found() {
     if(FOOD_PLACE_FOUND == this->found) {
         return 1;
     } else return 0;
+}
+
+int FoodGFO::is_on_gf_yet(GameField& gf) {
+    unsigned XY[2];
+    this->XY.getValueXY(XY[0],XY[1]);
+    unsigned value;
+    gf.getValueByCoordsXY(&value, XY);
+    if(FOOD_GF_CODE == value) {
+        return 1;
+    }
+    return 0;
 }
