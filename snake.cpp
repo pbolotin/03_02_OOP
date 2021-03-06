@@ -17,6 +17,17 @@ int main() {
         gp.doGameProcessStep();
         gr.outputGameFieldOnTerminal(gp.getGameField());
     } while(!gp.it_is_the_end());
+    gp.doFinish();
+    for(int j=0; j < 10; j++) {
+        gr.outputGameFieldOnTerminal(gp.getGameField());
+        for(int i=0; i < 5; i++) {
+            gp.doGamePause();
+        }
+        gr.outputGameResultOnTerminal(gp.getGameField(), gp.getGameResult());
+        for(int i=0; i < 10; i++) {
+            gp.doGamePause();
+        }
+    }
     ConsoleSwitcher::restoreTerminalState();
     return 0;
 }
