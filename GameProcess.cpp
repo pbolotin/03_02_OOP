@@ -87,6 +87,9 @@ int GameProcess::doGameProcessStep() {
     this->snake.reactOnTicker(this->ticker);
     
     this->snake.setOnGameField(this->gf);
+    if(!this->food.is_on_gf_yet(this->gf)) {
+        this->food.removeFromGameField(this->gf);
+    }
     return 0;
 }
 
