@@ -13,7 +13,7 @@
 #define FOOD_PLACE_FOUND 1
 #define FOOD_PLACE_NOT_FOUND 0
 
-class FoodGFO : GameFieldObject {
+class FoodGFO : public GameFieldObject {
 private:
     Coords XY;
     Coords foundXY;

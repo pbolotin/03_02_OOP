@@ -7,7 +7,7 @@
 #define WALL_AROUND_GAME_FIELD 1
 #define WALL_GF_CODE 1
 
-class WallGFO : GameFieldObject {
+class WallGFO : public GameFieldObject {
 private:
     unsigned wayOfSetting;
     unsigned char wallUCharSymbol;
