@@ -13,15 +13,14 @@ SnakeGFO::SnakeGFO(): snakeGFCode(SNAKE_GF_CODE),
                       finishFlag(SNAKE_NOT_FINISH)
 {}
 
-int SnakeGFO::setHeadCoordsXY(unsigned headCoordsXY[2]) {
-    this->headCoordsXY[0] = headCoordsXY[0];
-    this->headCoordsXY[1] = headCoordsXY[1];
-    this->head_and_tail.push_front(new Coords(headCoordsXY[0], headCoordsXY[1]));
+int SnakeGFO::setHeadCoordsXY(Coords& headCoordsXY) {
+    this->headCoordsXY = headCoordsXY;
+    this->head_and_tail.push_front(new Coords(headCoordsXY));
     return 0;
 }
 
 int SnakeGFO::getHeadCoordsXY(Coords& headCoords) {
-    headCoords.setValueXY(this->headCoordsXY[0], this->headCoordsXY[1]);
+    headCoords = this->headCoordsXY;
     return 0;
 }
 
@@ -30,9 +29,7 @@ int SnakeGFO::setOnGameField(GameField& gf) {
         it != this->head_and_tail.end();
         it++)
     {
-        unsigned coordsXY[2];
-        (*it)->getValueXY(coordsXY[0], coordsXY[1]);
-        gf.setValueByCoordsXY((unsigned)this->snakeGFCode, coordsXY);
+        gf.setValueByCoordsXY((unsigned)this->snakeGFCode, *(*it));
     }
     return 0;
 }
@@ -42,9 +39,7 @@ int SnakeGFO::removeFromGameField(GameField& gf) {
         it != this->head_and_tail.end();
         it++)
     {
-        unsigned coordsXY[2];
-        (*it)->getValueXY(coordsXY[0], coordsXY[1]);
-        gf.setValueByCoordsXY(EMPTY_GF_CODE, coordsXY);
+        gf.setValueByCoordsXY(EMPTY_GF_CODE, *(*it));
     }
     return 0;
 }
@@ -76,22 +71,21 @@ int SnakeGFO::reactOnUser(User& ur) {
 }
 
 int SnakeGFO::reactOnGameField(GameField& gf) {
-    unsigned XY[2];
-    XY[0] = this->headCoordsXY[0];
-    XY[1] = this->headCoordsXY[1];
+    Coords XY;
+    XY = this->headCoordsXY;
     
     switch(this->moveDirection) {
         case SNAKE_MOVE_UP:
-            XY[1] -= 1;
+            XY.up();
             break;
         case SNAKE_MOVE_DOWN:
-            XY[1] += 1;
+            XY.down();
             break;
         case SNAKE_MOVE_RIGHT:
-            XY[0] += 1;
+            XY.right();
             break;
         case SNAKE_MOVE_LEFT:
-            XY[0] -= 1;
+            XY.left();
             break;
     }
     
@@ -139,26 +133,26 @@ int SnakeGFO::getLength() {
 int SnakeGFO::move() {
     switch(this->moveDirection) {
         case SNAKE_MOVE_UP:
-            this->headCoordsXY[1] -= 1;
+            this->headCoordsXY.up();
             break;
         case SNAKE_MOVE_DOWN:
-            this->headCoordsXY[1] += 1;
+            this->headCoordsXY.down();
             break;
         case SNAKE_MOVE_RIGHT:
-            this->headCoordsXY[0] += 1;
+            this->headCoordsXY.right();
             break;
         case SNAKE_MOVE_LEFT:
-            this->headCoordsXY[0] -= 1;
+            this->headCoordsXY.left();
             break;
     }
     
     if(SNAKE_CANT_EAT == this->canEat) {
         Coords* new_head = this->head_and_tail.back();
         this->head_and_tail.pop_back();
-        new_head->setValueXY(this->headCoordsXY[0], this->headCoordsXY[1]);
+        *new_head = this->headCoordsXY;
         this->head_and_tail.push_front(new_head);
     } else if(SNAKE_CAN_EAT == this->canEat) {
-        Coords* new_head = new Coords(this->headCoordsXY[0], this->headCoordsXY[1]);
+        Coords* new_head = new Coords(this->headCoordsXY);
         this->head_and_tail.push_front(new_head);
         this->canEat = SNAKE_CANT_EAT;
     }

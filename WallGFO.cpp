@@ -1,5 +1,6 @@
 #include <iostream>
 #include "WallGFO.h"
+#include "Coords.h"
 
 using namespace std;
 
@@ -9,19 +10,17 @@ int WallGFO::setOnGameField(GameField& gf) {
     unsigned sizeXY[2];
     gf.getSizeXY(sizeXY);
     if(WALL_AROUND_GAME_FIELD == this->wayOfSetting) {
-        unsigned coordsXY[2];
+        Coords coordsXY;
         for(unsigned i = 0; i < sizeXY[0]; i++) {
-            coordsXY[0] = i;
-            coordsXY[1] = 0;
+            coordsXY.setValueXY(i, 0);
             gf.setValueByCoordsXY(WALL_GF_CODE, coordsXY);
-            coordsXY[1] = sizeXY[1]-1;
+            coordsXY.setValueXY(coordsXY.getX(), sizeXY[1]-1);
             gf.setValueByCoordsXY(WALL_GF_CODE, coordsXY);
         }
         for(unsigned j = 1; j < sizeXY[1] - 1; j++) {
-            coordsXY[0] = 0;
-            coordsXY[1] = j;
+            coordsXY.setValueXY(0, j);
             gf.setValueByCoordsXY(WALL_GF_CODE, coordsXY);
-            coordsXY[0] = sizeXY[0]-1;
+            coordsXY.setValueXY(sizeXY[0]-1, coordsXY.getY());
             gf.setValueByCoordsXY(WALL_GF_CODE, coordsXY);
         }
     }
@@ -32,19 +31,17 @@ int WallGFO::removeFromGameField(GameField& gf) {
     unsigned sizeXY[2];
     gf.getSizeXY(sizeXY);
     if(WALL_AROUND_GAME_FIELD == this->wayOfSetting) {
-        unsigned coordsXY[2];
+        Coords coordsXY;
         for(unsigned i = 0; i < sizeXY[0]; i++) {
-            coordsXY[0] = i;
-            coordsXY[1] = 0;
+            coordsXY.setValueXY(i, 0);
             gf.setValueByCoordsXY(EMPTY_GF_CODE, coordsXY);
-            coordsXY[1] = sizeXY[1]-1;
+            coordsXY.setValueXY(coordsXY.getX(), sizeXY[1]-1);
             gf.setValueByCoordsXY(EMPTY_GF_CODE, coordsXY);
         }
         for(unsigned j = 1; j < sizeXY[1] - 1; j++) {
-            coordsXY[0] = 0;
-            coordsXY[1] = j;
+            coordsXY.setValueXY(0, j);
             gf.setValueByCoordsXY(EMPTY_GF_CODE, coordsXY);
-            coordsXY[0] = sizeXY[0]-1;
+            coordsXY.setValueXY(sizeXY[0]-1, coordsXY.getY());
             gf.setValueByCoordsXY(EMPTY_GF_CODE, coordsXY);
         }
     }

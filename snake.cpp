@@ -54,15 +54,15 @@ int main(int argc, char* argv[]) {
         gr.outputGameFieldOnTerminal(gp.getGameField());
     } while(!gp.it_is_the_end());
     gp.doFinish();
-    for(int j=0; j < 10; j++) {
+    for(int j=0; j < 5; j++) {
         ConsoleSwitcher::clearTerminalScreen();
         gr.outputGameFieldOnTerminal(gp.getGameField());
-        for(int i=0; i < 5; i++) {
+        for(int i=0; i < 3; i++) {
             gp.doGamePause();
         }
         ConsoleSwitcher::clearTerminalScreen();
         gr.outputGameResultOnTerminal(gp.getGameField(), gp.getGameResult());
-        for(int i=0; i < 10; i++) {
+        for(int i=0; i < 6; i++) {
             gp.doGamePause();
         }
     }

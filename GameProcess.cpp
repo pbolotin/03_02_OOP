@@ -1,4 +1,5 @@
 #include "GameProcess.h"
+#include "Coords.h"
 #include <stdio.h>
 
 GameProcess::GameProcess(): ticker(GP_TICKER_DEFAULT), the_end_flag(0)
@@ -8,9 +9,7 @@ GameProcess::GameProcess(): ticker(GP_TICKER_DEFAULT), the_end_flag(0)
     unsigned sizeXY[2];
     this->gf.getSizeXY(sizeXY);
     
-    unsigned coordsXY[2];
-    coordsXY[0] = sizeXY[0]/2;
-    coordsXY[1] = sizeXY[1]/2;
+    Coords coordsXY(sizeXY[0]/2, sizeXY[1]/2);
     
     this->snake.setHeadCoordsXY(coordsXY);
     this->allGFO.push_back(&(this->snake));
@@ -26,9 +25,7 @@ GameProcess::GameProcess(unsigned sizeX, unsigned sizeY, unsigned long tickerUS)
     unsigned sizeXY[2];
     this->gf.getSizeXY(sizeXY);
     
-    unsigned coordsXY[2];
-    coordsXY[0] = sizeXY[0]/2;
-    coordsXY[1] = sizeXY[1]/2;
+    Coords coordsXY(sizeXY[0]/2, sizeXY[1]/2);
     
     this->snake.setHeadCoordsXY(coordsXY);
     this->allGFO.push_back(&(this->snake));
@@ -89,8 +86,7 @@ int GameProcess::doGameProcessStep() {
         this->the_end_flag = 1;
     }
     if(this->snake.check_if_finish()) {
-        printf("SNAKE IS FINISHED!\n");
-        sleep(5);
+        //printf("SNAKE IS FINISHED!\n");
         this->the_end_flag = 1;
     }
     this->wall.setOnGameField(this->gf);

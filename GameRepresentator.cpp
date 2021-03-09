@@ -14,15 +14,14 @@ GameRepresentator::GameRepresentator() {
 
 int GameRepresentator::outputGameFieldOnTerminal(GameField& gf) {
     unsigned sizeXY[2];
-    unsigned coordsXY[2];
+    Coords coordsXY;
     unsigned value = 0;
     gf.getSizeXY(sizeXY);
     unsigned char* longStr = new unsigned char[(sizeXY[0]+1) * sizeXY[1]];
     unsigned placeInStr = 0;
     for(unsigned j = 0; j < sizeXY[1]; j++) {
         for(unsigned i = 0; i < sizeXY[0]; i++) {
-            coordsXY[0] = i;
-            coordsXY[1] = j;
+            coordsXY.setValueXY(i, j);
             gf.getValueByCoordsXY(&value, coordsXY);
             switch(value) {
                 case EMPTY_GF_CODE:

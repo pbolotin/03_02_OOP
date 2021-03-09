@@ -34,7 +34,7 @@ private:
     unsigned tickReductorQuotient;
     unsigned finishFlag;
     
-    unsigned headCoordsXY[2];
+    Coords headCoordsXY;
     std::list<Coords*> head_and_tail;
 public:
     SnakeGFO();
@@ -42,7 +42,7 @@ public:
     int reactOnGameField(GameField& gf);
     int reactOnTicker(Ticker& tr);
     
-    int setHeadCoordsXY(unsigned headCoordsXY[2]);
+    int setHeadCoordsXY(Coords& headCoordsXY);
     int getHeadCoordsXY(Coords& headCoords);
     
     int setOnGameField(GameField& gf);
