@@ -3,7 +3,25 @@
 
 GameProcess::GameProcess(): ticker(GP_TICKER_DEFAULT), the_end_flag(0)
 {
-    printf("GameProcess constructor, initialize game\n");
+    //printf("GameProcess constructor, initialize game\n");
+    
+    unsigned sizeXY[2];
+    this->gf.getSizeXY(sizeXY);
+    
+    unsigned coordsXY[2];
+    coordsXY[0] = sizeXY[0]/2;
+    coordsXY[1] = sizeXY[1]/2;
+    
+    this->snake.setHeadCoordsXY(coordsXY);
+    this->allGFO.push_back(&(this->snake));
+    this->allGFO.push_back(&(this->wall));
+    this->allGFO.push_back(&(this->food));
+}
+
+GameProcess::GameProcess(unsigned sizeX, unsigned sizeY, unsigned long tickerUS):
+    ticker(tickerUS), gf(sizeX, sizeY), the_end_flag(0)
+{
+    //printf("GameProcess constructor, initialize game\n");
     
     unsigned sizeXY[2];
     this->gf.getSizeXY(sizeXY);
@@ -19,7 +37,7 @@ GameProcess::GameProcess(): ticker(GP_TICKER_DEFAULT), the_end_flag(0)
 }
 
 GameProcess::~GameProcess() {
-    printf("GameProcess Destructor, finalize game\n");
+    //printf("GameProcess Destructor, finalize game\n");
 }
 
 int GameProcess::it_is_the_end() {
@@ -72,6 +90,7 @@ int GameProcess::doGameProcessStep() {
     }
     if(this->snake.check_if_finish()) {
         printf("SNAKE IS FINISHED!\n");
+        sleep(5);
         this->the_end_flag = 1;
     }
     this->wall.setOnGameField(this->gf);
@@ -84,9 +103,10 @@ int GameProcess::doGameProcessStep() {
             this->food.setOnGameField(this->gf);
         }
     }
-    this->snake.removeFromGameField(this->gf);
     this->snake.reactOnUser(this->user);
-    this->snake.reactOnGameField(this->gf);    
+    this->snake.reactOnGameField(this->gf);
+    this->snake.removeFromGameField(this->gf);
+       
     this->snake.reactOnTicker(this->ticker);
     
     this->snake.setOnGameField(this->gf);

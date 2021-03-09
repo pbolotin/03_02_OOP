@@ -26,6 +26,7 @@ class GameProcess {
     int the_end_flag;
 public:
     GameProcess();
+    GameProcess(unsigned sizeX, unsigned sizeY, unsigned long tickerUS = GP_TICKER_DEFAULT);
     ~GameProcess();
     int it_is_the_end();
     int getGameResult();
