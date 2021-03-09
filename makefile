@@ -13,7 +13,7 @@ OBJECTS  := $(SRC:%.cpp=$(OBJ_DIR)/%.o)
 DEPENDENCIES \
          := $(OBJECTS:.o=.d)
 
-all: build $(APP_DIR)/$(TARGET)
+all: build $(APP_DIR)/$(TARGET) snake_all_header
 
 $(OBJ_DIR)/%.o: %.cpp
 		@mkdir -p $(@D)
@@ -30,6 +30,9 @@ $(APP_DIR)/$(TARGET): $(OBJECTS)
 build:
 		@mkdir -p $(APP_DIR)
 		@mkdir -p $(OBJ_DIR)
+
+snake_all_header:
+		cat *.h > snake_all.hpp
 
 debug: CXXFLAGS += -DDEBUG -g
 debug: all
