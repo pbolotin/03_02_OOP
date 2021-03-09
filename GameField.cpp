@@ -16,14 +16,14 @@ int GameField::initializeMatrix() {
 
 GameField::GameField(): sizeX(10), sizeY(10) {
     initializeMatrix();
-    cout << "Constructor GameField::GameField()" << endl;
+    //cout << "Constructor GameField::GameField()" << endl;
 }
 
 GameField::GameField(unsigned sizeX, unsigned sizeY) {
     this->sizeX = sizeX;
     this->sizeY = sizeY;
     initializeMatrix();
-    cout << "Coustructor GameField::GameField(sizeX, sizeY)" << endl;
+    //cout << "Coustructor GameField::GameField(sizeX, sizeY)" << endl;
 }
 
 int GameField::getSizeXY(unsigned sizeXY[]) {
@@ -50,5 +50,5 @@ GameField::~GameField() {
         delete [] matrix[i];
     }
     delete [] matrix;
-    cout << "GameField destructor" << endl;
+    //cout << "GameField destructor" << endl;
 }
