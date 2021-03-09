@@ -10,7 +10,6 @@
 class WallGFO : public GameFieldObject {
 private:
     unsigned wayOfSetting;
-    unsigned char wallUCharSymbol;
 public:
     WallGFO();
     int setOnGameField(GameField& gf);
