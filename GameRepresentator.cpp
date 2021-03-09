@@ -9,7 +9,7 @@
 using namespace std;
 
 GameRepresentator::GameRepresentator() {
-    printf("GameRepresentator constructor will need the game state to represent it\n");
+    //printf("GameRepresentator constructor will need the game state to represent it\n");
 }
 
 int GameRepresentator::outputGameFieldOnTerminal(GameField& gf) {
@@ -90,5 +90,5 @@ int GameRepresentator::outputGameResultOnTerminal(GameField& gf, int result) {
 }
 
 GameRepresentator::~GameRepresentator() {
-    printf("GameRepresentator will finilize itself\n");
+    //printf("GameRepresentator will finilize itself\n");
 }
