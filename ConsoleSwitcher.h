@@ -54,6 +54,7 @@ public:
     ConsoleSwitcher();
     static int storeCurrentTerminalState();
     static int setNotCanonicalTerminalState();
+    static int clearTerminalScreen();
     static int restoreTerminalState();
     static enum keys getLastKeyFromTerminal();
 };

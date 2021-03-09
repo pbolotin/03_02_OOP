@@ -116,14 +116,14 @@ int ConsoleSwitcher::rk_mytermregime(int regime, int vtime, int vmin, int echo, 
     tcgetattr(0, &myTermStruct);
     
     if(regime & ICANON) {
-        printf("Set ICANON flag\n");
+        //printf("Set ICANON flag\n");
         myTermStruct.c_lflag |= ICANON;
     } else {
         if(vtime < 0 || vmin < 0) {
             perror("Error, vtime or vmin are incorrect\n");
             return -1;
         }
-        printf("Unset ICANON flag\n");
+        //printf("Unset ICANON flag\n");
         myTermStruct.c_lflag &= ~ICANON;
             /*
         MIN == 0, TIME == 0 (polling read)
@@ -133,7 +133,7 @@ int ConsoleSwitcher::rk_mytermregime(int regime, int vtime, int vmin, int echo, 
         If no data is available, read(2) returns 0.
         */
         if(vmin == 0 && vtime == 0) {
-            printf("Set polling read\n");
+            //printf("Set polling read\n");
             myTermStruct.c_cc[VMIN] = vmin;
             myTermStruct.c_cc[VTIME] = vtime;
         }
@@ -143,7 +143,7 @@ int ConsoleSwitcher::rk_mytermregime(int regime, int vtime, int vmin, int echo, 
         and returns up to the number of bytes requested.
         */
         else if(vmin > 0 && vtime == 0) {
-            printf("Set blocking read\n");
+            //printf("Set blocking read\n");
             myTermStruct.c_cc[VMIN] = vmin;
             myTermStruct.c_cc[VTIME] = vtime;
         }
@@ -159,7 +159,7 @@ int ConsoleSwitcher::rk_mytermregime(int regime, int vtime, int vmin, int echo, 
         the call behaves as though the data was received immediately after the call.
         */ 
         else if(vmin == 0 && vtime > 0) {
-            printf("Set read with timeout\n");
+            //printf("Set read with timeout\n");
             myTermStruct.c_cc[VMIN] = vmin;
             myTermStruct.c_cc[VTIME] = vtime;
         }
@@ -179,23 +179,23 @@ int ConsoleSwitcher::rk_mytermregime(int regime, int vtime, int vmin, int echo, 
         the call behaves as though the data was received immediately after the call.
         */
         else if(vmin > 0 && vtime > 0) {
-            printf("Set read with interbyte timeout\n");
+            //printf("Set read with interbyte timeout\n");
             myTermStruct.c_cc[VMIN] = vmin;
             myTermStruct.c_cc[VTIME] = vtime;
         }
     }
     if(echo & ECHO) {
-        printf("Set ECHO flag\n");
+        //printf("Set ECHO flag\n");
         myTermStruct.c_lflag |= ECHO;
     } else {
-        printf("Unset ECHO flag\n");
+        //printf("Unset ECHO flag\n");
         myTermStruct.c_lflag &= ~ECHO;
     }
     if(sigint & ISIG) {
-        printf("Set ISIG flag\n");
+        //printf("Set ISIG flag\n");
         myTermStruct.c_lflag |= ISIG;
     } else {
-        printf("Unset ISIG flag\n");
+        //printf("Unset ISIG flag\n");
         myTermStruct.c_lflag &= ~ISIG;
     }
     /*Set new value of termios*/
@@ -218,6 +218,11 @@ int ConsoleSwitcher::setNotCanonicalTerminalState() {
 
 int ConsoleSwitcher::restoreTerminalState() {
     tcsetattr(0, TCSADRAIN, &ConsoleSwitcher::myTermStruct);
+    return 0;
+}
+
+int ConsoleSwitcher::clearTerminalScreen() {
+    printf("\033[1;1H\033[2J");
     return 0;
 }
 
