@@ -6,15 +6,11 @@ using namespace std;
 Coords::Coords(): x(0), y(0) {}
 
 Coords::Coords(unsigned x, unsigned y) {
-    //cout << "Constr: " << x << " " << y << endl;
     this->x = x;
     this->y = y;
 }
 
-Coords::Coords(Coords& coords) {
-    //cout << "Constr: " << x << " " << y << endl;
-    this->x = coords.getX();
-    this->y = coords.getY();
+Coords::Coords(Coords& coords): x(coords.getX()), y(coords.getY()) {
 }
 
 int Coords::getValueXY(unsigned& x, unsigned& y) {
