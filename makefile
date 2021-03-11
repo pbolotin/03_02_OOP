@@ -25,7 +25,7 @@ $(APP_DIR)/$(TARGET): $(OBJECTS)
 
 -include $(DEPENDENCIES)
 
-.PHONY: all build clean debug release info
+.PHONY: all build clean debug release info snake_all_header
 
 build:
 		@mkdir -p $(APP_DIR)
