@@ -203,9 +203,6 @@ int ConsoleSwitcher::rk_mytermregime(int regime, int vtime, int vmin, int echo, 
     return 0;
 }
 
-/*Public*/
-ConsoleSwitcher::ConsoleSwitcher() {}
-
 int ConsoleSwitcher::storeCurrentTerminalState() {
     tcgetattr(0, &ConsoleSwitcher::myTermStruct);
     return 0;

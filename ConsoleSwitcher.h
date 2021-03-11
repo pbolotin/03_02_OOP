@@ -43,6 +43,7 @@ typedef struct seq_element {
 
 class ConsoleSwitcher {
 private:
+    ConsoleSwitcher();
     static struct termios myTermStruct;
     static char* _key_code_sequences[];
 
@@ -51,7 +52,6 @@ private:
     static int rk_readkey(enum keys *key);
     static int rk_mytermregime(int regime, int vtime, int vmin, int echo, int sigint);
 public:
-    ConsoleSwitcher();
     static int storeCurrentTerminalState();
     static int setNotCanonicalTerminalState();
     static int clearTerminalScreen();
