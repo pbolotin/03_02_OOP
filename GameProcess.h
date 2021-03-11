@@ -19,10 +19,10 @@ class GameProcess {
     Ticker ticker;
     GameField gf;
     User user;
-    vector<GameFieldObject*> allGFO;
     WallGFO wall;
     SnakeGFO snake;
     FoodGFO food;
+    vector<GameFieldObject*> allGFO;
     int the_end_flag;
 public:
     GameProcess();

@@ -3,9 +3,7 @@
 #include <stdio.h>
 
 GameProcess::GameProcess(): ticker(GP_TICKER_DEFAULT), the_end_flag(0)
-{
-    //printf("GameProcess constructor, initialize game\n");
-    
+{    
     unsigned sizeXY[2];
     this->gf.getSizeXY(sizeXY);
     
@@ -20,7 +18,6 @@ GameProcess::GameProcess(): ticker(GP_TICKER_DEFAULT), the_end_flag(0)
 GameProcess::GameProcess(unsigned sizeX, unsigned sizeY, unsigned long tickerUS):
     ticker(tickerUS), gf(sizeX, sizeY), the_end_flag(0)
 {
-    //printf("GameProcess constructor, initialize game\n");
     
     unsigned sizeXY[2];
     this->gf.getSizeXY(sizeXY);
@@ -33,9 +30,7 @@ GameProcess::GameProcess(unsigned sizeX, unsigned sizeY, unsigned long tickerUS)
     this->allGFO.push_back(&(this->food));
 }
 
-GameProcess::~GameProcess() {
-    //printf("GameProcess Destructor, finalize game\n");
-}
+GameProcess::~GameProcess() {}
 
 int GameProcess::it_is_the_end() {
     return this->the_end_flag;
@@ -86,7 +81,6 @@ int GameProcess::doGameProcessStep() {
         this->the_end_flag = 1;
     }
     if(this->snake.check_if_finish()) {
-        //printf("SNAKE IS FINISHED!\n");
         this->the_end_flag = 1;
     }
     this->wall.setOnGameField(this->gf);
